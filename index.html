@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mt. FUJI 100 配速表</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --text-xs:clamp(.75rem,.7rem + .25vw,.875rem);
+  --text-sm:clamp(.875rem,.8rem + .35vw,1rem);
+  --text-base:clamp(1rem,.95rem + .25vw,1.125rem);
+  --text-lg:clamp(1.125rem,1rem + .75vw,1.5rem);
+  --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
+  --text-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);
+  --s1:.25rem;--s2:.5rem;--s3:.75rem;--s4:1rem;--s5:1.25rem;--s6:1.5rem;--s8:2rem;--s10:2.5rem;--s12:3rem;--s16:4rem;
+  --r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;--r-2xl:1.5rem;--r-full:9999px;
+  --tr:200ms cubic-bezier(.16,1,.3,1);
+  --font:'Satoshi','Helvetica Neue',sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#08090d;--sf:#0f1219;--sf2:#141720;--sfo:#1a1e2a;
+  --bd:rgba(255,255,255,.07);--dv:rgba(255,255,255,.04);
+  --tx:#dde2f0;--txm:#6b748c;--txf:#353c52;
+  --shsm:0 1px 4px rgba(0,0,0,.5);--shmd:0 8px 32px rgba(0,0,0,.6);--shlg:0 24px 64px rgba(0,0,0,.7);
+  --asumi-c:#f5a623;--asumi-dim:rgba(245,166,35,.12);--asumi-glow:rgba(245,166,35,.25);
+  --kai-c:#c026d3;--kai-dim:rgba(192,38,211,.12);--kai-glow:rgba(192,38,211,.25);
+}
+[data-theme="light"]{
+  --bg:#f6f4f0;--sf:#ffffff;--sf2:#f0eee8;--sfo:#e8e4dc;
+  --bd:rgba(0,0,0,.08);--dv:rgba(0,0,0,.04);
+  --tx:#1a1710;--txm:#7a7264;--txf:#c0b8a8;
+  --shsm:0 1px 4px rgba(0,0,0,.07);--shmd:0 8px 32px rgba(0,0,0,.1);--shlg:0 24px 64px rgba(0,0,0,.14);
+  --asumi-c:#d48a0a;--asumi-dim:rgba(212,138,10,.10);--asumi-glow:rgba(212,138,10,.2);
+  --kai-c:#a21caf;--kai-dim:rgba(162,28,175,.10);--kai-glow:rgba(162,28,175,.2);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--tx);min-height:100dvh;overflow-x:hidden}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:var(--s3) var(--s6);display:flex;align-items:center;justify-content:space-between;transition:background var(--tr),backdrop-filter var(--tr)}
+.nav.scrolled{background:rgba(8,9,13,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--bd)}
+.nav-logo{display:flex;align-items:center;gap:var(--s3)}
+.nav-icon{width:32px;height:32px}
+.nav-wordmark{font-size:var(--text-sm);font-weight:700;letter-spacing:.02em}
+.nav-wordmark span{opacity:.5;font-weight:400}
+.theme-btn{width:36px;height:36px;border-radius:var(--r-md);border:1px solid var(--bd);background:rgba(255,255,255,.04);color:var(--txm);display:flex;align-items:center;justify-content:center;transition:all var(--tr)}
+.theme-btn:hover{color:var(--tx);background:var(--sf2)}
+
+/* ── HERO ── */
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--s16) var(--s6) var(--s12);position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,#f5a623,transparent 70%);top:-100px;left:-200px}
+.orb2{width:500px;height:500px;background:radial-gradient(circle,#c026d3,transparent 70%);bottom:-80px;right:-150px}
+.orb3{width:400px;height:400px;background:radial-gradient(circle,#5b9cf6,transparent 70%);top:40%;left:40%;transform:translate(-50%,-50%)}
+.hero-content{position:relative;z-index:1;max-width:680px}
+.hero-badge{display:inline-flex;align-items:center;gap:var(--s2);padding:6px 14px;border-radius:var(--r-full);border:1px solid var(--bd);background:rgba(255,255,255,.04);font-size:var(--text-xs);color:var(--txm);letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--s6);backdrop-filter:blur(8px)}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:#52c47a;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+.hero-title{font-size:var(--text-2xl);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:var(--s4)}
+.hero-title em{font-style:normal;background:linear-gradient(135deg,var(--asumi-c),var(--kai-c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:var(--text-base);color:var(--txm);line-height:1.7;margin-bottom:var(--s10);max-width:52ch;margin-inline:auto}
+.hero-meta{display:flex;justify-content:center;gap:var(--s8);flex-wrap:wrap}
+.hero-meta-item{display:flex;flex-direction:column;align-items:center;gap:2px}
+.hm-val{font-size:var(--text-lg);font-weight:700;font-variant-numeric:tabular-nums}
+.hm-lbl{font-size:var(--text-xs);color:var(--txm);text-transform:uppercase;letter-spacing:.07em}
+.scroll-hint{position:absolute;bottom:var(--s8);left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:var(--s2);color:var(--txf);font-size:var(--text-xs);animation:bobble 2.5s ease-in-out infinite}
+@keyframes bobble{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ── CARDS SECTION ── */
+.section{padding:var(--s16) var(--s6);max-width:880px;margin:0 auto}
+.section-label{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.12em;color:var(--txm);margin-bottom:var(--s4);display:flex;align-items:center;gap:var(--s3)}
+.section-label::after{content:'';flex:1;height:1px;background:var(--bd)}
+.section-title{font-size:var(--text-xl);font-weight:700;letter-spacing:-.02em;margin-bottom:var(--s4);line-height:1.2}
+.section-desc{color:var(--txm);font-size:var(--text-sm);line-height:1.7;max-width:60ch;margin-bottom:var(--s10)}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:var(--s6)}
+@media(max-width:640px){.cards{grid-template-columns:1fr}}
+
+.card{position:relative;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r-2xl);overflow:hidden;box-shadow:var(--shmd);transition:transform var(--tr),box-shadow var(--tr);text-decoration:none;display:block;color:inherit}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shlg)}
+.card-glow{position:absolute;inset:-1px;border-radius:var(--r-2xl);opacity:0;transition:opacity var(--tr);pointer-events:none}
+.card:hover .card-glow{opacity:1}
+.card-asumi .card-glow{background:linear-gradient(135deg,var(--asumi-glow),transparent 60%)}
+.card-kai .card-glow{background:linear-gradient(135deg,var(--kai-glow),transparent 60%)}
+.card-header{padding:var(--s6) var(--s6) var(--s4);position:relative}
+.card-race-tag{display:inline-flex;align-items:center;gap:var(--s2);padding:4px 12px;border-radius:var(--r-full);font-size:var(--text-xs);font-weight:700;letter-spacing:.06em;margin-bottom:var(--s4)}
+.tag-asumi{background:var(--asumi-dim);color:var(--asumi-c);border:1px solid rgba(245,166,35,.25)}
+.tag-kai{background:var(--kai-dim);color:var(--kai-c);border:1px solid rgba(192,38,211,.25)}
+.card-name{font-size:var(--text-xl);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:var(--s2)}
+.card-asumi .card-name{color:var(--asumi-c)}
+.card-kai .card-name{color:var(--kai-c)}
+.card-date{font-size:var(--text-xs);color:var(--txm)}
+.card-divider{height:1px;background:var(--bd);margin:0 var(--s6)}
+.card-stats{padding:var(--s4) var(--s6);display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s3)}
+.cs-item{display:flex;flex-direction:column;gap:2px}
+.cs-lbl{font-size:10px;color:var(--txm);text-transform:uppercase;letter-spacing:.06em}
+.cs-val{font-size:var(--text-sm);font-weight:700;font-variant-numeric:tabular-nums}
+.card-divider2{height:1px;background:var(--bd);margin:0 var(--s6)}
+.card-cps{padding:var(--s4) var(--s6);display:flex;flex-wrap:wrap;gap:var(--s2)}
+.cp-chip{padding:3px 9px;border-radius:var(--r-full);background:var(--sf2);border:1px solid var(--bd);font-size:10px;color:var(--txm);font-weight:600}
+.card-footer{padding:var(--s4) var(--s6) var(--s5);display:flex;align-items:center;justify-content:space-between}
+.card-cta{display:inline-flex;align-items:center;gap:var(--s2);font-size:var(--text-sm);font-weight:700;padding:8px 18px;border-radius:var(--r-full);transition:all var(--tr)}
+.cta-asumi{background:var(--asumi-dim);color:var(--asumi-c);border:1px solid rgba(245,166,35,.3)}
+.cta-kai{background:var(--kai-dim);color:var(--kai-c);border:1px solid rgba(192,38,211,.3)}
+.card:hover .cta-asumi{background:var(--asumi-c);color:#0d0900}
+.card:hover .cta-kai{background:var(--kai-c);color:#fff}
+.card-cutoff{font-size:var(--text-xs);color:var(--txm)}
+.card-cutoff strong{color:var(--tx)}
+
+/* ── FOOTER ── */
+.footer{border-top:1px solid var(--bd);padding:var(--s8) var(--s6);text-align:center;color:var(--txm);font-size:var(--text-xs)}
+.footer a{color:var(--txm);text-decoration:none}
+.footer a:hover{color:var(--tx)}
+
+@media(max-width:768px){
+  .nav{padding:var(--s3) var(--s4)}
+  .section{padding:var(--s12) var(--s4)}
+  .hero{padding:calc(var(--s16) + 40px) var(--s4) var(--s12)}
+  .hero-meta{gap:var(--s6)}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-logo">
+    <svg class="nav-icon" viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="8" fill="url(#g1)"/>
+      <path d="M6 22 L11 10 L16 16 L21 9 L26 22" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f5a623"/><stop offset="100%" stop-color="#c026d3"/></linearGradient></defs>
+    </svg>
+    <span class="nav-wordmark">Mt.FUJI 100 <span>配速工具</span></span>
+  </div>
+  <button class="theme-btn" data-theme-toggle aria-label="切換主題">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="hero-badge-dot"></span>2026 · Apr.25–26 · 富士山</div>
+    <h1 class="hero-title">Mt. FUJI 100<br><em>配速表工具</em></h1>
+    <p class="hero-desc">輸入你的 EPH、設定補給站休息時間，即時計算每個關門的到達時刻與餘裕。</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="hm-val" style="color:var(--asumi-c)">38.5km</span><span class="hm-lbl">ASUMI 距離</span></div>
+      <div class="hero-meta-item"><span class="hm-val" style="color:var(--asumi-c)">+1,481m</span><span class="hm-lbl">ASUMI 爬升</span></div>
+      <div class="hero-meta-item"><span class="hm-val" style="color:var(--txm)">|</span><span class="hm-lbl">&nbsp;</span></div>
+      <div class="hero-meta-item"><span class="hm-val" style="color:var(--kai-c)">68.6km</span><span class="hm-lbl">KAI 距離</span></div>
+      <div class="hero-meta-item"><span class="hm-val" style="color:var(--kai-c)">+2,921m</span><span class="hm-lbl">KAI 爬升</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>選擇賽事</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</section>
+
+<div class="section">
+  <div class="section-label">Select Race</div>
+  <h2 class="section-title">選擇你的賽事</h2>
+  <p class="section-desc">點選下方卡片進入對應配速表，兩個版本支援各段 EPH 獨立設定、補給站休息時間及關門警示。</p>
+
+  <div class="cards">
+
+    <!-- ASUMI 40K -->
+    <a class="card card-asumi" href="asumi40k.html">
+      <div class="card-glow"></div>
+      <div class="card-header">
+        <div class="card-race-tag tag-asumi">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>
+          SHORT SERIES
+        </div>
+        <div class="card-name">ASUMI 40K</div>
+        <div class="card-date">2026.04.25 SAT · 起跑 12:00</div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-stats">
+        <div class="cs-item"><span class="cs-lbl">距離</span><span class="cs-val" style="color:var(--asumi-c)">38.5km</span></div>
+        <div class="cs-item"><span class="cs-lbl">爬升</span><span class="cs-val">+1,481m</span></div>
+        <div class="cs-item"><span class="cs-lbl">限時</span><span class="cs-val">9h 30m</span></div>
+        <div class="cs-item"><span class="cs-lbl">EP</span><span class="cs-val">53.31</span></div>
+        <div class="cs-item"><span class="cs-lbl">補給站</span><span class="cs-val">1 站</span></div>
+        <div class="cs-item"><span class="cs-lbl">段數</span><span class="cs-val">2 段</span></div>
+      </div>
+      <div class="card-divider2"></div>
+      <div class="card-cps">
+        <span class="cp-chip">START 富士山GX</span>
+        <span class="cp-chip">A1 富士吉田 19.7km</span>
+        <span class="cp-chip">FINISH 富士山GX</span>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-footer">
+        <div class="card-cta cta-asumi">
+          開啟配速表
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="card-cutoff">關門 <strong>21:30</strong></div>
+      </div>
+    </a>
+
+    <!-- KAI 70K -->
+    <a class="card card-kai" href="kai70k.html">
+      <div class="card-glow"></div>
+      <div class="card-header">
+        <div class="card-race-tag tag-kai">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>
+          WORLD TRAIL MAJORS
+        </div>
+        <div class="card-name">KAI 70K</div>
+        <div class="card-date">2026.04.25–26 SAT–SUN · 起跑 14:00</div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-stats">
+        <div class="cs-item"><span class="cs-lbl">距離</span><span class="cs-val" style="color:var(--kai-c)">68.6km</span></div>
+        <div class="cs-item"><span class="cs-lbl">爬升</span><span class="cs-val">+2,921m</span></div>
+        <div class="cs-item"><span class="cs-lbl">限時</span><span class="cs-val">21h 00m</span></div>
+        <div class="cs-item"><span class="cs-lbl">EP</span><span class="cs-val">97.81</span></div>
+        <div class="cs-item"><span class="cs-lbl">補給站</span><span class="cs-val">4 站</span></div>
+        <div class="cs-item"><span class="cs-lbl">段數</span><span class="cs-val">5 段</span></div>
+      </div>
+      <div class="card-divider2"></div>
+      <div class="card-cps">
+        <span class="cp-chip">START 富士山GX</span>
+        <span class="cp-chip">K1 OSHINO 15.7km</span>
+        <span class="cp-chip">K2 YAMANAKAKO 25.2km</span>
+        <span class="cp-chip">K3 NIJU-MAGARI 38.1km</span>
+        <span class="cp-chip">K4 FUJIYOSHIDA 49.8km</span>
+        <span class="cp-chip">FINISH 富士山GX</span>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-footer">
+        <div class="card-cta cta-kai">
+          開啟配速表
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="card-cutoff">關門 <strong>Apr.26 11:00</strong></div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <p>Mt. FUJI 100 · 2026 · 配速表工具 · 數據僅供訓練參考，以官方公告為準</p>
+</footer>
+
+<script>
+// Nav scroll effect
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+});
+// Theme toggle
+(function(){
+  const btn=document.querySelector('[data-theme-toggle]'),html=document.documentElement;
+  let t='dark';
+  function set(v){
+    t=v;html.setAttribute('data-theme',v);
+    btn.innerHTML=v==='dark'
+      ?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+      :'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+    btn.setAttribute('aria-label',v==='dark'?'切換亮色':'切換暗色');
+  }
+  btn&&btn.addEventListener('click',()=>set(t==='dark'?'light':'dark'));
+  set('dark');
+})();
+</script>
+</body>
+</html>
